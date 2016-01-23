@@ -1,5 +1,5 @@
 {
-    "name": "willdurand/propel-statemachine-behavior",
+    "name": "smolowik/state-machine-behavior",
     "description": "Adds a finite state machine to your model.",
     "keywords": [ "propel", "behavior", "state machine" ],
     "license": "MIT",
@@ -7,11 +7,15 @@
         {
             "name": "William DURAND",
             "email": "william.durand1@gmail.com"
+        },
+	{
+            "name": "Aleksander Smołowik",
+            "email": "smolowik@gmail.com"
         }
     ],
     "require": {
         "php": ">=5.2.4",
-        "propel/propel1": "~1.6"
+        "propel/propel": "2.0.*@dev",
     },
     "require-dev": {
         "behat/behat": "~2.2",
@@ -23,9 +27,9 @@
     "config": {
         "bin-dir": "bin/"
     },
+    "type" : "propel-behavior",
     "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+        "name": "state_machine",
+        "class": "\\smolowik\\stateMachineBechavior\\StateMachineBehavior"
     }
 }
