@@ -32,6 +32,6 @@
     "type" : "propel-behavior",
     "extra": {
         "name": "state_machine",
-        "class": "\\smolowik\\state-machine-bechavior\\StateMachineBehavior"
+        "class": "smolowik\\Propel\\Behavior\\StateMachine\\StateMachineBehavior"
     }
 }

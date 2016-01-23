@@ -7,7 +7,7 @@ This behavior adds a finite state machine to your model.
 ### Configuration ###
 
 ``` xml
-<behavior name="state_machine">
+<behavior name="smolowik\Propel\Behavior\StateMachine\StateMachineBehavior">
     <parameter name="states" value="draft, rejected, unpublished, published" />
 
     <parameter name="initial_state" value="draft" />
