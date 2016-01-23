@@ -260,7 +260,7 @@ class PostController extends Controller
     {
         try {
             $post->publish()->save();
-        } catch (\LogicException $e) {
+        } catch (Propel\Runtime\Exception\LogicException $e) {
             // handle the exception as you wish
         }
     }
@@ -269,7 +269,7 @@ class PostController extends Controller
     {
         try {
             $post->unpublish()->save();
-        } catch (\LogicException $e) {
+        } catch (Propel\Runtime\Exception\LogicException $e) {
             // handle the exception as you wish
         }
     }

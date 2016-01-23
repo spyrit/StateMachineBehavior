@@ -1,7 +1,11 @@
 <?php
+namespace smolowik\Propel\Behavior\StateMachine;
+
+use Propel\Generator\Model\Behavior;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
+ * @author Aleksander Smołowik <smolowik@gmail.com>
  */
 class StateMachineBehavior extends Behavior
 {
@@ -54,7 +58,7 @@ class StateMachineBehavior extends Behavior
     /**
      * {@inheritdoc}
      */
-    public function addParameter($attribute)
+    public function addParameter(array $attribute)
     {
         if ('transition' === $attribute['name']) {
             $values = explode('|', $attribute['value']);
@@ -87,8 +91,7 @@ class StateMachineBehavior extends Behavior
     {
         $states       = $this->getStates();
         $defaultValue = array_search($this->getInitialState(), $states);
-
-        if (!$this->getTable()->containsColumn($this->getParameter('state_column'))) {
+        if (!$this->getTable()->hasColumn($this->getParameter('state_column'))) {
             $column = array(
                 'name'          => $this->getParameter('state_column'),
                 'type'          => 'INTEGER',
@@ -270,7 +273,7 @@ class StateMachineBehavior extends Behavior
 
     public function getExceptionClass()
     {
-        return 'LogicException';
+        return '\Propel\Runtime\Exception\LogicException';
     }
 
     public function getInitialState()

@@ -1,4 +1,5 @@
 <?php
+namespace smolowik\Propel\Behavior\StateMachine;
 
 class StateMachineBehaviorObjectBuilderModifier
 {
@@ -7,7 +8,7 @@ class StateMachineBehaviorObjectBuilderModifier
      */
     private $behavior;
 
-    public function __construct(Behavior $behavior)
+    public function __construct(\Propel\Generator\Model\Behavior $behavior)
     {
         $this->behavior = $behavior;
     }

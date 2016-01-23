@@ -22,7 +22,9 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "classmap": ["src/"]
+        "psr-4": {
+            "smolowik\\Propel\\Behavior\\StateMachine\\" : "src"
+        }
     },
     "config": {
         "bin-dir": "bin/"
