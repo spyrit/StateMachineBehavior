@@ -150,7 +150,7 @@ We can define the following configuration:
 <table name="post">
     <!-- some columns -->
 
-    <behavior name="state_machine">
+    <behavior name="smolowik\Propel\Behavior\StateMachine\StateMachineBehavior">
         <parameter name="states" value="draft, unpublished, published" />
 
         <parameter name="initial_state" value="draft" />
