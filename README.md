@@ -2,6 +2,7 @@ StateMachineBehavior for [Propel2](https://github.com/propelorm/Propel2)
 ==============================================
 
 This behavior adds a finite state machine to your model.
+This behavior is written by William Durand, I change it to work with Propel2.
 
 
 ### Configuration ###
