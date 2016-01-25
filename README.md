@@ -1,5 +1,6 @@
 StateMachineBehavior for [Propel2](https://github.com/propelorm/Propel2)
 ==============================================
+[![Build Status](https://travis-ci.org/smolowik/StateMachineBehavior.svg?branch=master)](https://travis-ci.org/smolowik/StateMachineBehavior)
 
 This behavior adds a finite state machine to your model.
 This behavior is written by William Durand, I change it to work with Propel2.
