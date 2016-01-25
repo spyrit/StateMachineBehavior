@@ -5,7 +5,6 @@ use Propel\Generator\Model\Behavior;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
- * @author Aleksander Smołowik <smolowik@gmail.com>
  */
 class StateMachineBehavior extends Behavior
 {
