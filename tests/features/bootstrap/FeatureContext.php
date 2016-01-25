@@ -35,9 +35,8 @@ class FeatureContext extends BehatContext
      */
     public function theFollowingXmlSchema(PyStringNode $schema)
     {
-        $builder = new PropelQuickBuilder();
+        $builder = new \Propel\Generator\Util\QuickBuilder();
         $config  = $builder->getConfig();
-        $config->setBuildProperty('behavior.state_machine.class', __DIR__ . '/../../../src/StateMachineBehavior');
         $builder->setConfig($config);
         $builder->setSchema($schema);
 
