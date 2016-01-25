@@ -23,6 +23,7 @@ class StateMachineBehavior extends Behavior
         'transition'       => array(),
         'state_column'     => self::DEFAULT_STATE_COLUMN,
         'with_description' => 'false',
+        'timestampable' => false
     );
 
     /**

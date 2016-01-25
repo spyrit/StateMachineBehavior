@@ -1,4 +1,7 @@
 <?php
+namespace StateMachineBehavior\tests;
+
+use Propel\Generator\Util\QuickBuilder;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -7,10 +10,10 @@ class StateMachineBehaviorTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!class_exists('Post')) {
+        if (!class_exists('TableWithStateMachineBehavior')) {
             $schema = <<<EOF
 <database name="state_machine_behavior" defaultIdMethod="native">
-    <table name="post">
+    <table name="table_with_state_machine_behavior">
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 
         <behavior name="state_machine">
@@ -21,9 +24,11 @@ class StateMachineBehaviorTest extends \PHPUnit_Framework_TestCase
             <parameter name="transition" value="draft to published with publish" />
             <parameter name="transition" value="published to unpublished with unpublish" />
             <parameter name="transition" value="unpublished to published with publish" />
+
+            <parameter name="state_column" value="state" />
         </behavior>
     </table>
-    <table name="post_with_custom_column">
+    <table name="table_with_state_machine_behavior_with_custom_column">
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 
         <behavior name="state_machine">
@@ -42,9 +47,8 @@ class StateMachineBehaviorTest extends \PHPUnit_Framework_TestCase
     </table>
 </database>
 EOF;
-            $builder = new PropelQuickBuilder();
+            $builder = new QuickBuilder();
             $config  = $builder->getConfig();
-            $config->setBuildProperty('behavior.state_machine.class', '../src/StateMachineBehavior');
             $builder->setConfig($config);
             $builder->setSchema($schema);
 
@@ -54,74 +58,75 @@ EOF;
 
     public function testObjectMethods()
     {
-        $this->assertTrue(method_exists('Post', 'isDraft'));
-        $this->assertTrue(method_exists('Post', 'isUnpublished'));
-        $this->assertTrue(method_exists('Post', 'isPublished'));
 
-        $this->assertTrue(method_exists('Post', 'canPublish'));
-        $this->assertTrue(method_exists('Post', 'canUnpublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'isDraft'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'isUnpublished'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'isPublished'));
 
-        $this->assertTrue(method_exists('Post', 'publish'));
-        $this->assertTrue(method_exists('Post', 'unpublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'canPublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'canUnpublish'));
 
-        $this->assertTrue(method_exists('Post', 'prePublish'));
-        $this->assertTrue(method_exists('Post', 'onPublish'));
-        $this->assertTrue(method_exists('Post', 'postPublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'publish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'unpublish'));
 
-        $this->assertTrue(method_exists('Post', 'preUnpublish'));
-        $this->assertTrue(method_exists('Post', 'onUnpublish'));
-        $this->assertTrue(method_exists('Post', 'postUnpublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'prePublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'onPublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'postPublish'));
 
-        $this->assertTrue(method_exists('Post', 'getAvailableStates'));
-        $this->assertTrue(method_exists('Post', 'getState'));
-        $this->assertTrue(method_exists('Post', 'getHumanizedState'));
-        $this->assertTrue(method_exists('Post', 'getHumanizedStates'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'preUnpublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'onUnpublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'postUnpublish'));
 
-        $this->assertTrue(defined('Post::STATE_DRAFT'));
-        $this->assertTrue(defined('Post::STATE_PUBLISHED'));
-        $this->assertTrue(defined('Post::STATE_UNPUBLISHED'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'getAvailableStates'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'getState'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'getHumanizedState'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehavior', 'getHumanizedStates'));
 
-        $this->assertTrue(defined('Post::STATE_NORMALIZED_DRAFT'));
-        $this->assertEquals('draft', Post::STATE_NORMALIZED_DRAFT);
+        $this->assertTrue(defined('TableWithStateMachineBehavior::STATE_DRAFT'));
+        $this->assertTrue(defined('TableWithStateMachineBehavior::STATE_PUBLISHED'));
+        $this->assertTrue(defined('TableWithStateMachineBehavior::STATE_UNPUBLISHED'));
+
+        $this->assertTrue(defined('TableWithStateMachineBehavior::STATE_NORMALIZED_DRAFT'));
+        $this->assertEquals('draft', \TableWithStateMachineBehavior::STATE_NORMALIZED_DRAFT);
     }
 
     public function testInitialState()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehavior();
         $this->assertTrue($post->isDraft());
     }
 
     public function testGetState()
     {
-        $post = new Post();
-        $this->assertEquals(Post::STATE_DRAFT, $post->getState());
+        $post = new \TableWithStateMachineBehavior();
+        $this->assertEquals(\TableWithStateMachineBehavior::STATE_DRAFT, $post->getState());
     }
 
     public function testGetNormalizedState()
     {
-        $post = new Post();
-        $this->assertEquals(Post::STATE_NORMALIZED_DRAFT, $post->getNormalizedState());
+        $post = new \TableWithStateMachineBehavior();
+        $this->assertEquals(\TableWithStateMachineBehavior::STATE_NORMALIZED_DRAFT, $post->getNormalizedState());
     }
 
     public function testGetNormalizedStates()
     {
         $expected = array(
-            Post::STATE_NORMALIZED_DRAFT,
-            Post::STATE_NORMALIZED_UNPUBLISHED,
-            Post::STATE_NORMALIZED_PUBLISHED,
+            \TableWithStateMachineBehavior::STATE_NORMALIZED_DRAFT,
+            \TableWithStateMachineBehavior::STATE_NORMALIZED_UNPUBLISHED,
+            \TableWithStateMachineBehavior::STATE_NORMALIZED_PUBLISHED,
         );
 
-        $this->assertCount(3, Post::getNormalizedStates());
-        $this->assertEquals($expected, Post::getNormalizedStates());
+        $this->assertCount(3, \TableWithStateMachineBehavior::getNormalizedStates());
+        $this->assertEquals($expected, \TableWithStateMachineBehavior::getNormalizedStates());
     }
 
     public function testGetAvailableStates()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehavior();
         $expected = array(
-            Post::STATE_DRAFT,
-            Post::STATE_UNPUBLISHED,
-            Post::STATE_PUBLISHED,
+            \TableWithStateMachineBehavior::STATE_DRAFT,
+            \TableWithStateMachineBehavior::STATE_UNPUBLISHED,
+            \TableWithStateMachineBehavior::STATE_PUBLISHED,
         );
 
         $this->assertEquals($expected, $post->getAvailableStates());
@@ -129,7 +134,7 @@ EOF;
 
     public function testIssersDefaultValues()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehavior();
 
         $this->assertTrue($post->isDraft());
         $this->assertFalse($post->isPublished());
@@ -138,7 +143,7 @@ EOF;
 
     public function testCannersDefaultValues()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehavior();
 
         $this->assertTrue($post->canPublish());
         $this->assertFalse($post->canUnpublish());
@@ -146,7 +151,7 @@ EOF;
 
     public function testPublish()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehavior();
 
         $this->assertTrue($post->isDraft());
         $this->assertFalse($post->isPublished());
@@ -155,7 +160,7 @@ EOF;
 
         try {
             $post->publish();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail('Unexpected exception caught: ' . $e->getMessage());
         }
 
@@ -168,21 +173,21 @@ EOF;
 
     public function testSymbolMethodShouldThrowAnExceptionOnInvalidCall()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehavior();
 
         $this->assertFalse($post->canUnpublish());
 
         try {
             $post->unpublish();
             $this->fail('Expected exception not thrown') ;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assertTrue(true);
             $this->assertInstanceOf('LogicException', $e);
         }
 
         try {
             $post->publish();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->fail('Unexpected exception caught: ' . $e->getMessage());
         }
 
@@ -195,7 +200,7 @@ EOF;
         try {
             $post->publish();
             $this->fail('Expected exception not thrown') ;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assertTrue(true);
             $this->assertInstanceOf('LogicException', $e);
         }
@@ -203,19 +208,19 @@ EOF;
 
     public function testGenerateGetStateIfCustomStateColumn()
     {
-        $this->assertTrue(method_exists('PostWithCustomColumn', 'getState'));
-        $this->assertTrue(method_exists('PostWithCustomColumn', 'getMyState'));
-        $this->assertTrue(method_exists('PostWithCustomColumn', 'isNotYetPublished'));
-        $this->assertTrue(method_exists('PostWithCustomColumn', 'flagForPublish'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehaviorWithCustomColumn', 'getState'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehaviorWithCustomColumn', 'getMyState'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehaviorWithCustomColumn', 'isNotYetPublished'));
+        $this->assertTrue(method_exists('TableWithStateMachineBehaviorWithCustomColumn', 'flagForPublish'));
 
-        $this->assertTrue(defined('PostWithCustomColumn::STATE_NOT_YET_PUBLISHED'));
-        $this->assertTrue(defined('PostWithCustomColumn::STATE_NORMALIZED_NOT_YET_PUBLISHED'));
-        $this->assertEquals('not_yet_published', PostWithCustomColumn::STATE_NORMALIZED_NOT_YET_PUBLISHED);
+        $this->assertTrue(defined('TableWithStateMachineBehaviorWithCustomColumn::STATE_NOT_YET_PUBLISHED'));
+        $this->assertTrue(defined('TableWithStateMachineBehaviorWithCustomColumn::STATE_NORMALIZED_NOT_YET_PUBLISHED'));
+        $this->assertEquals('not_yet_published', \TableWithStateMachineBehaviorWithCustomColumn::STATE_NORMALIZED_NOT_YET_PUBLISHED);
     }
 
     public function testIssersDefaultValuesWithCustomStateColumn()
     {
-        $post = new PostWithCustomColumn();
+        $post = new \TableWithStateMachineBehaviorWithCustomColumn();
 
         $this->assertTrue($post->isDraft());
         $this->assertFalse($post->isPublished());
@@ -224,7 +229,7 @@ EOF;
 
     public function testCannersDefaultValuesWithCustomStateColumn()
     {
-        $post = new PostWithCustomColumn();
+        $post = new \TableWithStateMachineBehaviorWithCustomColumn();
 
         $this->assertTrue($post->canPublish());
         $this->assertFalse($post->canUnpublish());
@@ -232,33 +237,33 @@ EOF;
 
     public function testGetHumanizedState()
     {
-        $post = new PostWithCustomColumn();
+        $post = new \TableWithStateMachineBehaviorWithCustomColumn();
         $this->assertEquals('Draft', $post->getHumanizedState());
 
-        $refl = new ReflectionClass($post);
+        $refl = new \ReflectionClass($post);
         $prop = $refl->getProperty('my_state');
         $prop->setAccessible(true);
-        $prop->setValue($post, PostWithCustomColumn::STATE_NOT_YET_PUBLISHED);
+        $prop->setValue($post, \TableWithStateMachineBehaviorWithCustomColumn::STATE_NOT_YET_PUBLISHED);
 
         $this->assertEquals('Not Yet Published', $post->getHumanizedState());
     }
 
     public function testGetAvailableStatesStatic()
     {
-        $post = new Post();
+        $post = new \TableWithStateMachineBehaviorWithCustomColumn();
 
-        $this->assertEquals($post->getAvailableStates(), Post::getAvailableStates());
+        $this->assertEquals($post->getAvailableStates(), \TableWithStateMachineBehaviorWithCustomColumn::getAvailableStates());
     }
 
     public function testGetHumanizedStates()
     {
         $expected = array(
-            Post::STATE_DRAFT       => 'Draft',
-            Post::STATE_UNPUBLISHED => 'Unpublished',
-            Post::STATE_PUBLISHED   => 'Published',
+            \TableWithStateMachineBehaviorWithCustomColumn::STATE_DRAFT       => 'Draft',
+            \TableWithStateMachineBehaviorWithCustomColumn::STATE_NOT_YET_PUBLISHED => 'Not Yet Published',
+            \TableWithStateMachineBehaviorWithCustomColumn::STATE_PUBLISHED   => 'Published',
+            \TableWithStateMachineBehaviorWithCustomColumn::STATE_FLAGGED   => 'Flagged',
         );
-
-        $this->assertTrue(is_array(Post::getHumanizedStates()));
-        $this->assertEquals($expected, Post::getHumanizedStates());
+        $this->assertTrue(is_array(\TableWithStateMachineBehaviorWithCustomColumn::getHumanizedStates()));
+        $this->assertEquals($expected, \TableWithStateMachineBehaviorWithCustomColumn::getHumanizedStates());
     }
 }
