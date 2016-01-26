@@ -25,6 +25,7 @@ class StateMachineBehaviorObjectBuilderModifier
             'stateColumnGetter'      => $this->getColumnGetter('state_column'),
             'timestampable'          => $this->behavior->isTimestampable(),
             'timestampColumnSetters' => $timestampColumnSetters,
+            'modelTableMap'       => $builder->getTableMapClass(),
         ));
     }
 

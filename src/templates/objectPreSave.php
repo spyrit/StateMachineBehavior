@@ -1,4 +1,4 @@
-$isStateColumnModified = $this->isColumnModified(<?php echo $stateColumn ?>);
+$isStateColumnModified = $this->isColumnModified(<?php echo $modelTableMap; ?>::<?php echo $stateColumn ?>);
 <?php if ($timestampable): ?>
 if ($isStateColumnModified) {
     switch ($this-><?php echo $stateColumnGetter ?>()) {
