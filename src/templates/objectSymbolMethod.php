@@ -1,7 +1,7 @@
 
 /**
  */
-public function <?php echo $methodName ?>(PropelPDO $con = null)
+public function <?php echo $methodName ?>(ConnectionInterface $con = null)
 {
     if (false === $this-><?php echo $canMethodName ?>()) {
         throw new <?php echo $exceptionClass ?>(sprintf(

@@ -3,7 +3,7 @@
 /**
  *
  */
-public function <?php echo $symbol['pre'] ?>(PropelPDO $con = null)
+public function <?php echo $symbol['pre'] ?>(ConnectionInterface $con = null)
 {
     return true;
 }
@@ -11,14 +11,14 @@ public function <?php echo $symbol['pre'] ?>(PropelPDO $con = null)
 /**
  *
  */
-public function <?php echo $symbol['on'] ?>(PropelPDO $con = null)
+public function <?php echo $symbol['on'] ?>(ConnectionInterface $con = null)
 {
 }
 
 /**
  *
  */
-public function <?php echo $symbol['post'] ?>(PropelPDO $con = null)
+public function <?php echo $symbol['post'] ?>(ConnectionInterface $con = null)
 {
 }
 
