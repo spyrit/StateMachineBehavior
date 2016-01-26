@@ -92,38 +92,38 @@ on the current model's state:
 
 It will also generate a set of methods for each `symbol`:
 
-    publish(PropelPDO $con = null)
+    publish(ConnectionInterface $con = null)
 
-    unpublish(PropelPDO $con = null)
+    unpublish(ConnectionInterface $con = null)
 
-    reject(PropelPDO $con = null)
+    reject(ConnectionInterface $con = null)
 
 
 To handle custom logic, new hooks are created.
 The methods below should return a boolean value, and can act as **guards** (which is not part
 of the FSM's terminology).
 
-    prePublish(PropelPDO $con = null)
+    prePublish(ConnectionInterface $con = null)
 
-    preUnpublish(PropelPDO $con = null)
+    preUnpublish(ConnectionInterface $con = null)
 
-    preReject(PropelPDO $con = null)
+    preReject(ConnectionInterface $con = null)
 
 The methods below should contain your own logic depending on each state, and your business.
 
-    onPublish(PropelPDO $con = null)
+    onPublish(ConnectionInterface $con = null)
 
-    onUnpublish(PropelPDO $con = null)
+    onUnpublish(ConnectionInterface $con = null)
 
-    onReject(PropelPDO $con = null)
+    onReject(ConnectionInterface $con = null)
 
 The methods below allow to execute code once the transition is executed.
 
-    postPublish(PropelPDO $con = null)
+    postPublish(ConnectionInterface $con = null)
 
-    postUnpublish(PropelPDO $con = null)
+    postUnpublish(ConnectionInterface $con = null)
 
-    postReject(PropelPDO $con = null)
+    postReject(ConnectionInterface $con = null)
 
 
 ### ActiveQuery API ###
@@ -234,7 +234,7 @@ class Post extends BasePost
     // and that we injected it before.
     private $mailManager;
 
-    public function onPublish(PropelPDO $con = null)
+    public function onPublish(ConnectionInterface $con = null)
     {
         $this->mailManager->postPublished(
             $this->getAuthor(),
