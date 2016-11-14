@@ -1,5 +1,5 @@
 {
-    "name": "spyrit/propel-eventdispatcher-bundle",
+    "name": "spyrit/state-machine-behavior",
     "description": "Adds a finite state machine to your model.",
     "keywords": [ "propel", "behavior", "state machine" ],
     "license": "MIT",
