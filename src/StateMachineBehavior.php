@@ -2,6 +2,7 @@
 namespace smolowik\Propel\Behavior\StateMachine;
 
 use Propel\Generator\Model\Behavior;
+use Propel\Runtime\Exception\LogicException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
